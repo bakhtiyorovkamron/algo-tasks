@@ -1,23 +1,28 @@
 package main
 
-import "fmt"
-
 // sort it
 // remove duplicates
 // calculate
 
 func FindErrorNums(nums []int) []int {
-	fmt.Println("INPUT :",nums)
+
+	duplicates := make(map[int]struct{})
+	numsWithoutDupls := []int{}
+	l := len(nums)
+	d := 0
 	for i := range nums {
-
-		if i != len(nums)-1 && nums[i] == nums[i+1] {
-			if nums[0] >= nums[i+1] {
-				return []int{nums[i], nums[i+1] - 1}
-			} else {
-				return []int{nums[i], nums[i+1] + 1}
-			}
+		if _, ok := duplicates[nums[i]]; ok {
+			d = nums[i]
+			continue
 		}
-
+		duplicates[nums[i]] = struct{}{}
+		numsWithoutDupls = append(numsWithoutDupls, nums[i])
 	}
+	for i := 0; i < l; i++ {
+		if _, ok := duplicates[i+1]; !ok {
+			return []int{d, i + 1}
+		}
+	}
+
 	return []int{}
 }
