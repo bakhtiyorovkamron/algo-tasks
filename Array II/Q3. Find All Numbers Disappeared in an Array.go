@@ -1,31 +1,24 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
 func FindDisappearedNumbers(nums []int) []int {
+	sort.Ints(nums)
 
-	fmt.Println("Input :", nums)
-	outPut := []int{}
-
-	clearedNums := make(map[int]struct{})
+	duplc := make(map[int]struct{})
 	for i := range nums {
-		if _, ok := clearedNums[nums[i]]; ok {
-			continue
-		}
-		clearedNums[nums[i]] = struct{}{}
-		outPut = append(outPut, nums[i])
+		duplc[nums[i]] = struct{}{}
 	}
 
-	sort.Ints(outPut)
+	result := []int{}
 
-	for i := range outPut {
-		if _, ok := clearedNums[i+1]; !ok {
-			fmt.Println(i+1)
+	for i := range nums {
+		if _, ok := duplc[i+1]; !ok {
+			result = append(result, i+1)
 		}
-	}
 
-	return outPut
+	}
+	return result
 }
