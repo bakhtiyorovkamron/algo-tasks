@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(BuildArray([]int{2, 3, 4}, 4))
+	fmt.Println(EvalRPN([]string{"10","6","9","3","+","-11","*","/","*","17","+","5","+"}))
 }
