@@ -2,44 +2,67 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
 type Log struct {
 	Name      string
 	Operation string
-	Time      string
+	At        string
 }
 
-type Stack map[string]int
+type Stack []string
 
-func NewStack() Stack {
-	return make(map[string]int)
+func empty() Stack {
+	return []string{}
 }
 
-func (s Stack) push(x string) {
-	if _, ok := s[x]; !ok {
-		s = map[string]int{}
+var result []string
+
+var stackMap = make(map[string][]string)
+
+func (s *Stack) push(x Log) {
+
+	if x.Operation == "start" {
+		at, _ := strconv.Atoi(x.At)
+		if _, ok := stackMap[x.Name]; !ok {
+			if len(*s) != 0 {
+				at--
+				stackMap[(*s)[len(*s)-1]] = append(stackMap[(*s)[len(*s)-1]], x.At)
+			}
+		}
+		*s = append(*s, x.Name)
+		stackMap[x.Name] = append(stackMap[x.Name], fmt.Sprintf("%d", at))
+	} else {
+		stackMap[(*s)[len(*s)-1]] = append(stackMap[(*s)[len(*s)-1]], x.At)
+		*s = (*s)[:len(*s)-1]
+
+		if len(*s) != 0 {
+			stackMap[(*s)[len(*s)-1]] = append(stackMap[(*s)[len(*s)-1]], x.At)
+		}
 	}
-	s[x]++
 }
-func (s Stack) pop(x string) int {
-	t := s[x]
-	s = map[string]int{}
-	return t
+
+func (s *Stack) remove(x string, times []string) {
+	//for _, t := range times {
+	//
+	//}
 }
 
 func ExclusiveTime(n int, logs []string) []int {
-
-	stack := NewStack()
-	stack.push("1")
-	stack.push("1")
-	fmt.Println(stack)
+	fmt.Println("LOGS :", logs)
+	//INPUT : "0:start:0","1:start:2","1:end:5","0:end:6"
+	//OUTPUT : [3,4]
+	stack := Stack{}
 
 	for _, log := range logs {
-		logParser(log)
-	}
+		l := logParser(log)
+		stack.push(l)
 
+	}
+	fmt.Println(stackMap)
+	fmt.Println(stack)
 	return []int{}
 }
 func logParser(log string) Log {
@@ -50,6 +73,6 @@ func logParser(log string) Log {
 	return Log{
 		Name:      l[0],
 		Operation: l[1],
-		Time:      l[2],
+		At:        l[2],
 	}
 }
