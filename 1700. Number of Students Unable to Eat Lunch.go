@@ -8,7 +8,7 @@ func CountStudents(students []int, sandwiches []int) int {
 		st[students[i]]++
 	}
 
-	for true {
+	for {
 		if len(students) == 0 {
 			return 0
 		}
@@ -26,5 +26,5 @@ func CountStudents(students []int, sandwiches []int) int {
 			students = append(students, kaprizniy)
 		}
 	}
-	return 0
+
 }
