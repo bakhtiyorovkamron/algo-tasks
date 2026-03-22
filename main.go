@@ -30,7 +30,7 @@ func main() {
 
 	// fmt.Println(a[0], a[1], a[2], a[3])
 
-	fmt.Println(CalPoints([]string{"5", "2", "C", "D", "+"}))
+	fmt.Println(ClearDigits("abc"))
 	//ExclusiveTime(1, []string{"0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7"})
 	// fmt.Println(MinOperations([]string{"./", "wz4/", "../", "mj2/", "../", "../", "ik0/", "il7/"}))
 }
