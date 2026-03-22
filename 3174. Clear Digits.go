@@ -1,21 +1,17 @@
 package main
 
 func ClearDigits(s string) string {
-	a := "0123456789"
+	var stack []byte
 
-	numbers := make(map[uint8]struct{})
-	for i := 0; i < len(a); i++ {
-		numbers[a[i]] = struct{}{}
-	}
-
-	b := []byte(s)
-
-	for i := 0; i < len(b); i++ {
-		if _, ok := numbers[b[i]]; ok {
-			b = append(b[:i-1], b[i+1:]...)
-			i = 0
+	for i := 0; i < len(s); i++ {
+		if s[i] >= '0' && s[i] <= '9' {
+			if len(stack) > 0 {
+				stack = stack[:len(stack)-1]
+			}
+		} else {
+			stack = append(stack, s[i])
 		}
 	}
-	s = string(b)
-	return s
+
+	return string(stack)
 }
